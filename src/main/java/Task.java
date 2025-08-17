@@ -1,7 +1,8 @@
 public class Task {
 
-    private boolean marked  =  false;
-    private String text;
+    protected boolean marked  =  false;
+    protected String type;
+    protected String text;
 
     public Task (String text) {
         this.text = text;
@@ -27,9 +28,9 @@ public class Task {
     @Override
     public String toString() {
         if (marked) {
-            return "[X] " + text;
+            return "[" + type + "]" + "[X] " + text;
         } else {
-            return "[ ] " + text;
+            return "[" + type + "]" + "[ ] " + text;
         }
     }
 }

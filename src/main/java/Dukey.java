@@ -1,8 +1,8 @@
 import java.util.Scanner;
 public class Dukey {
 
-    Task [] arr;
-    int i;
+    Task [] arr = new Task[100];
+    int i = 0;
 
     public static void main(String[] args) {
         System.out.println("________________________________");
@@ -13,36 +13,82 @@ public class Dukey {
         curr.reply();
     }
 
-    public Dukey() {
-        arr = new Task [100];
-        i = 0;
-    }
-
     public void reply() {
         Scanner scan = new Scanner(System.in) ;
         String input = scan.nextLine();
-        if (input.equals("bye")) {
+        String [] temp = input.split(" ");
+        String command = temp [0];
+
+        if (command.equals("bye")) {
             this.end();
             return;
-        }
 
-        else if (input.equals("list")) {
+        } else if (command.equals("list")) {
             this.lst();
-        }
 
-        else if (input.split(" ")[0].equals("mark")) {
-            arr[Integer.parseInt(input.split(" ")[1]) - 1].mark();
-        }
+        } else if (command.equals("mark")) {
+            arr[Integer.parseInt(temp[1]) - 1].mark();
 
-        else if (input.split(" ")[0].equals("unmark")) {
-            arr[Integer.parseInt(input.split(" ")[1]) - 1].unmark();
-        }
-        else {
+        } else if (command.equals("unmark")) {
+            arr[Integer.parseInt(temp[1]) - 1].unmark();
+
+        } else {
+            Task task;
+            if (command.equals("todo")) {
+                StringBuilder curr = new StringBuilder();
+                for (int i = 1; i < temp.length; i++) {
+                    curr.append(temp[i]);
+                    curr.append(" ");
+                }
+                task = new ToDo(curr.toString().trim());
+
+            } else if (command.equals("deadline")) {
+                String dueDate;
+                String text = "";
+                StringBuilder curr = new StringBuilder();
+                for (int i = 1; i < temp.length; i++) {
+                    if (temp[i].equals("/by")) {
+                        text = curr.toString();
+                        curr = new StringBuilder();
+                    } else {
+                        curr.append(temp[i]);
+                        curr.append(" ");
+                    }
+                }
+                dueDate = curr.toString();
+                task = new DeadLine(text.trim(), dueDate.trim());
+
+            } else {
+                String from = "";
+                String to;
+                String text = "";
+                StringBuilder curr = new StringBuilder();
+                for (int i = 1; i < temp.length; i++) {
+                    if (temp[i].equals("/from")) {
+                        text = curr.toString();
+                        curr = new StringBuilder();
+                    } else if (temp[i].equals("/to")) {
+                        from = curr.toString();
+                        curr = new StringBuilder();
+                    }
+                    else {
+                        curr.append(temp[i]);
+                        curr.append(" ");
+                    }
+                }
+                to = curr.toString();
+                task = new Event(text.trim(), from.trim(), to.trim());
+            }
+
             System.out.println("________________________________");
-            System.out.println("added:" + " " + input);
-            System.out.println("________________________________");
-            arr[i] = new Task(input);
+            System.out.println("Got it. I've added this task:");
+            System.out.println(task);
+            arr[i] = task;
             i++;
+            System.out.println("Now you have " + i + " tasks in the list.");
+            System.out.println("________________________________");
+
+
         }
         this.reply();
     }
