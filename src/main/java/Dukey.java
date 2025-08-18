@@ -10,14 +10,19 @@ public class Dukey {
         System.out.println("What can I do for you?");
         System.out.println("________________________________");
         Dukey curr = new Dukey();
-        curr.reply();
+        try {
+            curr.reply();
+        } catch (DukeyException exception) {
+            System.out.println(exception.getMessage());
+        }
     }
 
-    public void reply() {
+    public void reply() throws DukeyException {
         Scanner scan = new Scanner(System.in) ;
         String input = scan.nextLine();
         String [] temp = input.split(" ");
         String command = temp [0];
+        Task task = null;
 
         if (command.equals("bye")) {
             this.end();
@@ -32,17 +37,18 @@ public class Dukey {
         } else if (command.equals("unmark")) {
             arr[Integer.parseInt(temp[1]) - 1].unmark();
 
-        } else {
-            Task task;
-            if (command.equals("todo")) {
+        } else if (command.equals("todo")) {
                 StringBuilder curr = new StringBuilder();
                 for (int i = 1; i < temp.length; i++) {
                     curr.append(temp[i]);
                     curr.append(" ");
                 }
+                if (curr.isEmpty()) {
+                    throw new DukeyException("Description Missing!");
+                }
                 task = new ToDo(curr.toString().trim());
 
-            } else if (command.equals("deadline")) {
+        } else if (command.equals("deadline")) {
                 String dueDate;
                 String text = "";
                 StringBuilder curr = new StringBuilder();
@@ -55,10 +61,13 @@ public class Dukey {
                         curr.append(" ");
                     }
                 }
+                if (text.isEmpty()) {
+                    throw new DukeyException("Description Missing!");
+                }
                 dueDate = curr.toString();
                 task = new DeadLine(text.trim(), dueDate.trim());
 
-            } else {
+        } else if (command.equals("event")) {
                 String from = "";
                 String to;
                 String text = "";
@@ -76,10 +85,16 @@ public class Dukey {
                         curr.append(" ");
                     }
                 }
+                if (text.isEmpty()) {
+                    throw new DukeyException("Description Missing!");
+                }
                 to = curr.toString();
                 task = new Event(text.trim(), from.trim(), to.trim());
-            }
 
+        } else {
+            throw new DukeyException("Command not found");
+        }
+        if (task != null) {
             System.out.println("________________________________");
             System.out.println("Got it. I've added this task:");
             System.out.println(task);
@@ -87,8 +102,6 @@ public class Dukey {
             i++;
             System.out.println("Now you have " + i + " tasks in the list.");
             System.out.println("________________________________");
-
-
         }
         this.reply();
     }
