@@ -1,8 +1,8 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 public class Dukey {
 
-    Task [] arr = new Task[100];
-    int i = 0;
+    ArrayList<Task> arr = new ArrayList<>();
 
     public static void main(String[] args) {
         System.out.println("________________________________");
@@ -32,10 +32,13 @@ public class Dukey {
             this.lst();
 
         } else if (command.equals("mark")) {
-            arr[Integer.parseInt(temp[1]) - 1].mark();
+            arr.get(Integer.parseInt(temp[1]) - 1).mark();
 
         } else if (command.equals("unmark")) {
-            arr[Integer.parseInt(temp[1]) - 1].unmark();
+            arr.get(Integer.parseInt(temp[1]) - 1).unmark();
+
+        } else if (command.equals("delete")) {
+            delete(Integer.parseInt(temp[1]) - 1);
 
         } else if (command.equals("todo")) {
                 StringBuilder curr = new StringBuilder();
@@ -98,9 +101,9 @@ public class Dukey {
             System.out.println("________________________________");
             System.out.println("Got it. I've added this task:");
             System.out.println(task);
-            arr[i] = task;
-            i++;
-            System.out.println("Now you have " + i + " tasks in the list.");
+            arr.add(task);
+
+            System.out.println("Now you have " + arr.size() + " tasks in the list.");
             System.out.println("________________________________");
         }
         this.reply();
@@ -108,10 +111,18 @@ public class Dukey {
 
     public void lst() {
         System.out.println("________________________________");
-        for (int j = 0; j < i; j++) {
-            System.out.println(j + 1 + "." + arr[j].toString());
+        for (int j = 0; j < arr.size(); j++) {
+            System.out.println(j + 1 + "." + arr.get(j).toString());
         }
         System.out.println("________________________________");
+    }
+
+    public void delete(int index) {
+        Task temp = arr.get(index);
+        arr.remove(index);
+        System.out.println("Noted. I've removed this task:");
+        System.out.println(temp.toString());
+        System.out.println("Now you have " + arr.size() + " tasks in the list.");
     }
 
     public void end() {
