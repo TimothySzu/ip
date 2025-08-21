@@ -101,6 +101,7 @@ public class Dukey {
                     eventTo = eventDesc.toString();
                     task = new Event(eventText.trim(), eventFrom.trim(), eventTo.trim());  // Create event task
                     break;
+                    
                 default:
                     throw new DukeyException("Command not found");  // Handle invalid commands
             }
