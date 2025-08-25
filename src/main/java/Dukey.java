@@ -1,19 +1,39 @@
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.*;
+import java.io.*;
+
 
 public class Dukey {
 
     // Store the tasks
     private ArrayList<Task> arr = new ArrayList<>();
+    private File file;
 
     // Entry point of the program
     public static void main(String[] args) {
+        Dukey curr = new Dukey();
+        //read .txt file
+
+        /*
+        try {
+            File file = new File("data/duke.txt");
+            Scanner scanner = new Scanner(file);
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                dukey.add(line);
+            }
+            scanner.close();
+
+        //make new file if no existing file
+        } catch (FileNotFoundException e) {
+            File file = new File("data");
+        }
+
+         */
+
         System.out.println("________________________________");
         System.out.println("Hello! I'm Dukey");
         System.out.println("What can I do for you?");
         System.out.println("________________________________");
-
-        Dukey curr = new Dukey();
 
         try {
             curr.reply(); // Start replying to user input
@@ -32,9 +52,18 @@ public class Dukey {
                 this.end();
                 break; // End the loop when "bye" is entered
             }
+            //get the command
+            String command;
+            String rest;
+            int firstSpaceIndex = input.indexOf(" ");
+            if (firstSpaceIndex > 0) {
+                command = input.substring(0, firstSpaceIndex);
+                rest = input.substring(firstSpaceIndex + 1);
+            } else {
+                command = input;
+                rest = "";
+            }
 
-            String[] temp = input.split(" ");  // Split input into commands
-            String command = temp[0];
             Task task = null;  // Initialize task object to store created tasks
 
             // Handle commands
@@ -43,65 +72,23 @@ public class Dukey {
                     this.lst();  // Display the task list
                     break;
                 case "mark":
-                    arr.get(Integer.parseInt(temp[1]) - 1).mark();  // Mark task as done
+                    arr.get(Integer.parseInt(rest.trim()) - 1).mark();  // Mark task as done
                     break;
                 case "unmark":
-                    arr.get(Integer.parseInt(temp[1]) - 1).unmark();  // Mark task as undone
+                    arr.get(Integer.parseInt(rest.trim()) - 1).unmark();  // Mark task as undone
                     break;
                 case "delete":
-                    delete(Integer.parseInt(temp[1]) - 1);  // Delete a task
+                    delete(Integer.parseInt(rest.trim()) - 1);  // Delete a task
                     break;
                 case "todo":
-                    StringBuilder todoDesc = new StringBuilder();
-                    for (int i = 1; i < temp.length; i++) {
-                        todoDesc.append(temp[i]).append(" ");  // Build the todo description
-                    }
-                    if (todoDesc.isEmpty()) {
-                        throw new DukeyException("Description Missing!");  // Handle missing description
-                    }
-                    task = new ToDo(todoDesc.toString().trim());  // Create ToDo task
+                    task = new ToDo(rest.trim(), false);  // Create ToDo task
                     break;
                 case "deadline":
-                    String deadlineText = "";
-                    String deadlineDate = "";
-                    StringBuilder deadlineDesc = new StringBuilder();
-                    for (int i = 1; i < temp.length; i++) {
-                        if (temp[i].equals("/by")) {
-                            deadlineText = deadlineDesc.toString();  // Save description before /by
-                            deadlineDesc = new StringBuilder();
-                        } else {
-                            deadlineDesc.append(temp[i]).append(" ");
-                        }
-                    }
-                    if (deadlineText.isEmpty()) {
-                        throw new DukeyException("Description Missing!");  // Handle missing description
-                    }
-                    deadlineDate = deadlineDesc.toString();
-                    task = new DeadLine(deadlineText.trim(), deadlineDate.trim());  // Create deadline task
+                    task = new DeadLine(rest.trim(), false);  // Create deadline task
                     break;
                 case "event":
-                    String eventText = "";
-                    String eventFrom = "";
-                    String eventTo = "";
-                    StringBuilder eventDesc = new StringBuilder();
-                    for (int i = 1; i < temp.length; i++) {
-                        if (temp[i].equals("/from")) {
-                            eventText = eventDesc.toString();  // Save description before /from
-                            eventDesc = new StringBuilder();
-                        } else if (temp[i].equals("/to")) {
-                            eventFrom = eventDesc.toString();  // Save 'from' date/time
-                            eventDesc = new StringBuilder();
-                        } else {
-                            eventDesc.append(temp[i]).append(" ");
-                        }
-                    }
-                    if (eventText.isEmpty()) {
-                        throw new DukeyException("Description Missing!");  // Handle missing description
-                    }
-                    eventTo = eventDesc.toString();
-                    task = new Event(eventText.trim(), eventFrom.trim(), eventTo.trim());  // Create event task
+                    task = new Event(rest, false);  // Create event task
                     break;
-                    
                 default:
                     throw new DukeyException("Command not found");  // Handle invalid commands
             }
@@ -112,7 +99,6 @@ public class Dukey {
                 System.out.println("Got it. I've added this task:");
                 System.out.println(task);
                 arr.add(task);  // Add task to the list
-
                 System.out.println("Now you have " + arr.size() + " tasks in the list.");
                 System.out.println("________________________________");
             }
@@ -140,6 +126,17 @@ public class Dukey {
         System.out.println("Now you have " + arr.size() + " tasks in the list.");
         System.out.println("________________________________");
     }
+
+    /*
+    //write task list into the .txt file
+    public void writeToFile() {
+
+        for (Task task : arr) {
+            file.write(task.toString());
+        }
+    }
+
+     */
 
     // End the program
     public void end() {

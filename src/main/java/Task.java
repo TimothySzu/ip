@@ -1,15 +1,14 @@
 public class Task {
 
-    protected boolean marked  =  false;
+    protected boolean isMarked  =  false;
     protected String type;
     protected String text;
 
-    public Task (String text) {
-        this.text = text;
+    public Task () {
     }
 
     public void mark () {
-        marked = true;
+        isMarked = true;
         System.out.println("________________________________");
         System.out.println("Nice! I've marked this task as done:");
         System.out.println(this.toString());
@@ -18,7 +17,7 @@ public class Task {
     }
 
     public void unmark () {
-        marked = false;
+        isMarked = false;
         System.out.println("________________________________");
         System.out.println("OK, I've marked this task as not done yet:");
         System.out.println(this.toString());
@@ -27,7 +26,7 @@ public class Task {
 
     @Override
     public String toString() {
-        if (marked) {
+        if (isMarked) {
             return "[" + type + "]" + "[X] " + text;
         } else {
             return "[" + type + "]" + "[ ] " + text;
