@@ -1,3 +1,6 @@
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class Task {
 
     protected boolean isMarked  =  false;
@@ -23,7 +26,12 @@ public class Task {
         System.out.println(this.toString());
         System.out.println("________________________________");
     }
-
+    LocalDateTime convertToDateTime (String date) {
+        //date format : dd/mm//yyyy 0000
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
+        LocalDateTime dt = LocalDateTime.parse(date, formatter);
+        return dt;
+    }
     @Override
     public String toString() {
         if (isMarked) {

@@ -1,11 +1,14 @@
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class DeadLine extends Task {
 
-    String dueDate;
+    LocalDateTime dueDate;
+
 
     public DeadLine (String text, boolean isMarked) throws DukeyException {
         super();
         this.isMarked = isMarked;
-        this.dueDate = dueDate;
         this.type = "D";
 
         String [] temp = text.split(" ");
@@ -24,16 +27,19 @@ public class DeadLine extends Task {
             throw new DukeyException("Description Missing!");  // Handle missing description
         }
         this.text = deadlineText.trim();
-        this.dueDate = deadlineDesc.toString().trim();
-
+        this.dueDate = convertToDateTime (deadlineDesc.toString().trim());
     }
 
     @Override
     public String toString() {
-        return super.toString() + " (by: " + dueDate + ")";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HHmm");
+        String temp1 = dueDate.format(formatter);
+        return super.toString() + " (by: " + temp1 + ")";
     }
     @Override
     public String toTxt () {
-        return super.toString() + " /by " + dueDate;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
+        String temp1 = dueDate.format(formatter);
+        return super.toString() + " /by " + temp1;
     }
 }

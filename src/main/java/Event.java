@@ -1,7 +1,11 @@
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class Event extends Task {
 
-    String from;
-    String to;
+    LocalDateTime from;
+    LocalDateTime to;
 
     public Event (String text, boolean isMarked) throws DukeyException{
         super();
@@ -9,15 +13,13 @@ public class Event extends Task {
         this.type = "E";
         String [] temp = text.split(" ");
         String eventText = "";
-        String eventFrom = "";
-        String eventTo = "";
         StringBuilder eventDesc = new StringBuilder();
         for (int i = 0; i < temp.length; i++) {
             if (temp[i].equals("/from")) {
-                eventText = eventDesc.toString();  // Save description before /from
+                eventText = eventDesc.toString().trim();  // Save description before /from
                 eventDesc = new StringBuilder();
             } else if (temp[i].equals("/to")) {
-                eventFrom = eventDesc.toString();  // Save 'from' date/time
+                from = convertToDateTime(eventDesc.toString().trim());  // Save 'from' date/time
                 eventDesc = new StringBuilder();
             } else {
                 eventDesc.append(temp[i]).append(" ");
@@ -27,17 +29,22 @@ public class Event extends Task {
             throw new DukeyException("Description Missing!");  // Handle missing description
         }
         this.text = eventText.trim();
-        this.from = eventFrom.trim();
-        this.to = eventDesc.toString().trim();
+        this.to = convertToDateTime(eventDesc.toString().trim());
     }
 
     @Override
     public String toString () {
-        return super.toString() + " (from " + from + " to: " + to + ")";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HHmm");
+        String temp1 = from.format(formatter);
+        String temp2 = from.format(formatter);
+        return super.toString() + " (from " + temp1 + " to: " + temp2 + ")";
     }
     @Override
     public String toTxt () {
-        return super.toString() + " /from " + from + " /to " + to;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
+        String temp1 = from.format(formatter);
+        String temp2 = from.format(formatter);
+        return super.toString() + " /from " + temp1 + " /to " + temp2;
     }
 
 }
