@@ -1,3 +1,5 @@
+import Exceptions.DukeyException;
+
 import java.util.Scanner;
 
 class Ui {
