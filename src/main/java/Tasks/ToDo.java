@@ -1,3 +1,7 @@
+package Tasks;
+
+import Exceptions.DukeyException;
+
 public class ToDo extends Task {
 
     public ToDo (String text, boolean isMarked) throws DukeyException {

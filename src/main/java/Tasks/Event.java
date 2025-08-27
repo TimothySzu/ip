@@ -1,3 +1,8 @@
+package Tasks;
+
+import Exceptions.DukeyException;
+import Tasks.Task;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -7,7 +12,7 @@ public class Event extends Task {
     LocalDateTime from;
     LocalDateTime to;
 
-    public Event (String text, boolean isMarked) throws DukeyException{
+    public Event (String text, boolean isMarked) throws DukeyException {
         super();
         this.isMarked = isMarked;
         this.type = "E";

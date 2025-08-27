@@ -1,3 +1,5 @@
+package Exceptions;
+
 public class DukeyException extends Exception {
 
 
