@@ -32,4 +32,8 @@ public class DeadLine extends Task {
     public String toString() {
         return super.toString() + " (by: " + dueDate + ")";
     }
+    @Override
+    public String toTxt () {
+        return super.toString() + " /by " + dueDate;
+    }
 }

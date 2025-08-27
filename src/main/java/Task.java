@@ -32,4 +32,7 @@ public class Task {
             return "[" + type + "]" + "[ ] " + text;
         }
     }
+    public String toTxt() {
+        return this.toString();
+    }
 }
