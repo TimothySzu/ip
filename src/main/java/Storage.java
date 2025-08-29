@@ -50,7 +50,7 @@ public class Storage {
         }
     }
 
-    void add (String line) throws DukeyException {
+    public void add (String line) throws DukeyException {
         //format of line in .txt file is : [E][ ] project meeting /from Mon 2pm /to 4pm)
         char type = line.charAt(1);
         boolean isMarked =  line.charAt(4) == 'X' ? true : false;

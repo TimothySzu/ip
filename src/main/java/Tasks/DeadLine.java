@@ -7,7 +7,7 @@ import java.time.format.DateTimeFormatter;
 
 public class DeadLine extends Task {
 
-    LocalDateTime dueDate;
+    public LocalDateTime dueDate;
 
 
     public DeadLine (String text, boolean isMarked) throws DukeyException {
