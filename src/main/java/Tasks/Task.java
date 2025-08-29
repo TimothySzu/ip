@@ -6,8 +6,8 @@ import java.time.format.DateTimeFormatter;
 public class Task {
 
     protected boolean isMarked  =  false;
-    protected String type;
-    protected String text;
+    public String type;
+    public String text;
 
     public Task () {
     }
