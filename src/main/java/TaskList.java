@@ -2,10 +2,15 @@ import Tasks.Task;
 
 import java.util.ArrayList;
 
+/* TaskList implements a list of current tasks */
 public class TaskList {
 
-    ArrayList<Task> arr;
+    /* list of tasks */
+    protected ArrayList<Task> arr;
 
+    /**
+     * Initialise TaskList.
+     */
     public TaskList () {
         this.arr = new ArrayList<Task>();
     }
@@ -14,7 +19,12 @@ public class TaskList {
         return arr.size();
     }
 
-    public void add(Task task) {
+    /**
+     * Adds task to list.
+     *
+     * @param task task to be added to list.
+     */
+    public void addTask(Task task) {
         System.out.println("________________________________");
         System.out.println("Got it. I've added this task:");
         System.out.println(task);
@@ -23,15 +33,17 @@ public class TaskList {
         System.out.println("________________________________");
     }
 
-    public void mark (String text) {
+    public void markTask (String text) {
         arr.get(Integer.parseInt(text.trim()) - 1).mark();
     }
 
-    public void unmark (String text) {
+    public void unmarkTask (String text) {
         arr.get(Integer.parseInt(text.trim()) - 1).unmark();
     }
 
-    // List all tasks
+    /**
+     * Prints out all tasks on current list.
+     */
     public void lst() {
         System.out.println("________________________________");
         for (int j = 0; j < arr.size(); j++) {
@@ -40,8 +52,12 @@ public class TaskList {
         System.out.println("________________________________");
     }
 
-    // Delete a task at the given index
-    public void delete(int index) {
+    /**
+     * Removes task at index.
+     *
+     * @param index index of task to be removed.
+     */
+    public void deleteTask(int index) {
         Task temp = arr.get(index);
         arr.remove(index);  // Remove the task
         System.out.println("________________________________");

@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 
+/** Driver class to run main method */
 public class Driver {
 
     public static void main (String [] args) {

@@ -11,14 +11,24 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/* Storage class to handle interactions with .txt file */
 public class Storage {
 
-    TaskList tasklist;
+    private TaskList taskList;
 
-    public Storage(TaskList tasklist) {
-        this.tasklist = tasklist;
+/**
+ * Initialise storage.
+ */
+ public Storage(TaskList taskList) {
+        this.taskList = taskList;
     }
 
+    /**
+     * Load .txt file.
+     * If no existing file, create new one.
+     * If files exists, add tasks to taskList.
+     * Handle errors that may arise from opening/ creating file.
+     */
     public void load() {
         //read .txt file
         try {
@@ -38,7 +48,7 @@ public class Storage {
             Scanner scanner = new Scanner(file);
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
-                add(line); // Add the line to your list (curr)
+                add(line); // Add the task to taskList
             }
             scanner.close(); // Always close the scanner after use
 
@@ -50,31 +60,43 @@ public class Storage {
         }
     }
 
+    /**
+     * Adds .txt representation of task to taskList.
+     * Read the .txt format of task and initialise the task.
+     * Add the new task to taskList.
+     *
+     * @throws DukeyException if task description missing,
+     * or task type is unspecified,
+     */
     public void add (String line) throws DukeyException {
         //format of line in .txt file is : [E][ ] project meeting /from Mon 2pm /to 4pm)
         char type = line.charAt(1);
         boolean isMarked =  line.charAt(4) == 'X' ? true : false;
         String rest = line.substring(7);
         Task task = null;
-        switch (type) {
-            case 'T':
-                task = new ToDo(rest, isMarked);
-                break;
-            case 'D':
-                task = new DeadLine(rest, isMarked);
-                break;
-            case 'E':
-                task = new Event(rest, isMarked);
-                break;
+        try {
+            switch (type) {
+                case 'T':
+                    task = new ToDo(rest, isMarked);
+                    break;
+                case 'D':
+                    task = new DeadLine(rest, isMarked);
+                    break;
+                case 'E':
+                    task = new Event(rest, isMarked);
+                    break;
+                default:
+                    throw new DukeyException("Unspecified task type");
+            }
+        } catch (DukeyException exception) {
+            throw exception;
         }
-        if(task != null) {
-            tasklist.add(task);
-        } else {
-            throw new DukeyException("Unspecified task type");
-        }
+        taskList.addTask(task);
     }
 
-    //write task list into the .txt file
+    /**
+     * Writes taskList into .txt file.
+     */
     public void rewriteFile(String filePath) {
         try {
             // Step 1: Create a FileWriter object in write mode (overwrite mode)
@@ -82,7 +104,7 @@ public class Storage {
             BufferedWriter bufferedWriter = new BufferedWriter(writer);
 
             // Step 2: Loop through the ArrayList and write each element to the file
-            for (Task task : tasklist.arr) {
+            for (Task task : taskList.arr) {
                 bufferedWriter.write(task.toTxt());
                 bufferedWriter.newLine(); // Add a new line after each item
             }
