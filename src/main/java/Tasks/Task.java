@@ -14,6 +14,10 @@ public class Task {
     public String text;
 
 
+    public String getDesc() {
+        return this.text;
+    }
+
     public void mark () {
         isMarked = true;
         System.out.println("________________________________");
