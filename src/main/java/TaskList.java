@@ -39,6 +39,23 @@ public class TaskList {
         }
         System.out.println("________________________________");
     }
+    /**
+     * Filters list by description and prints it
+     *
+     * @param desc Description of what we are filtering for.
+     */
+    public void findTask(String desc) {
+        int index = 1;
+        System.out.println("________________________________");
+        System.out.println("Here are the matching tasks in your list:");
+        for (Task task : arr) {
+            if (task.getDesc().contains(desc)) {
+                System.out.println(index + "." + task.toString());
+                index ++;
+            }
+        }
+        System.out.println("________________________________");
+    }
 
     // Delete a task at the given index
     public void delete(int index) {

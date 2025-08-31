@@ -46,6 +46,9 @@ public class Parser {
             case "event":
                 task = new Event(rest, false);  // Create event task
                 break;
+            case "find":
+                tasklist.findTask(rest);
+                break;
             default:
                 throw new DukeyException("Command not found");  // Handle invalid commands
         }
