@@ -7,7 +7,7 @@ import java.time.format.DateTimeFormatter;
 public class Task {
 
     /** Whether a tasked is marked as completed or not, not completed by default*/
-    protected boolean isMarked  =  false;
+    protected boolean isMarked  = false;
     /** Type of Task, "T", "D", "E"/ ToDo, DeadLine, Event */
     public String type;
     /** Description of task */
@@ -18,21 +18,25 @@ public class Task {
         return this.text;
     }
 
-    public void mark () {
+    public String mark () {
         isMarked = true;
         System.out.println("________________________________");
         System.out.println("Nice! I've marked this task as done:");
         System.out.println(this.toString());
         System.out.println("________________________________");
+        return "Nice! I've marked this task as done:\n" +
+                this.toString();
 
     }
 
-    public void unmark () {
+    public String unmark () {
         isMarked = false;
         System.out.println("________________________________");
         System.out.println("OK, I've marked this task as not done yet:");
         System.out.println(this.toString());
         System.out.println("________________________________");
+        return "OK, I've marked this task as not done yet:\n" +
+                this.toString();
     }
 
     /**

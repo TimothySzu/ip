@@ -14,7 +14,8 @@ public class Dukey {
     private Parser parser;
     /* ui to receive and process user input */
     private Ui ui;
-
+    /* reply message to output */
+    private String output;
     /**
      * Initialises Dukey chatbot with the required supporting classes.
      */
@@ -30,12 +31,6 @@ public class Dukey {
         System.out.println("Hello! I'm Dukey");
         System.out.println("What can I do for you?");
         System.out.println("________________________________");
-
-        try {
-            ui.reply(); // Start taking and replying to user input
-        } catch (DukeyException exception) {
-            System.out.println(exception.getMessage()); // Handle any exceptions
-        }
     }
 
     /**
@@ -46,4 +41,17 @@ public class Dukey {
         System.out.println("Bye. Hope to see you again soon!");
         System.out.println("________________________________");
     }
+    /**
+     * Initialises Dukey chatbot with the required supporting classes.
+     * @return String return message
+     */
+    String reply(String input) {
+        try {
+            return ui.reply(input); // Start taking and replying to user input
+        } catch (DukeyException exception) {
+            System.out.println(exception.getMessage());
+            return exception.getMessage(); // Handle any exceptions
+        }
+    }
+
 }

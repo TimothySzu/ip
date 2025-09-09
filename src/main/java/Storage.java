@@ -29,7 +29,8 @@ public class Storage {
      * If files exists, add tasks to taskList.
      * Handle errors that may arise from opening/ creating file.
      */
-    public void load() {
+    public String load() {
+        String output = "";
         //read .txt file
         try {
             // Create a File object pointing to "duke.txt"
@@ -38,8 +39,10 @@ public class Storage {
             // If the file does not exist, create it
             if (!file.exists()) {
                 if (file.createNewFile()) {
+                    output = "File created: " + file.getName();
                     System.out.println("File created: " + file.getName());
                 } else {
+                    output = "Failed to create the file.";
                     System.out.println("Failed to create the file.");
                 }
             }
@@ -53,11 +56,14 @@ public class Storage {
             scanner.close(); // Always close the scanner after use
 
         } catch (IOException e) {
+            output = "An error occurred while handling the file.";
             System.out.println("An error occurred while handling the file.");
             e.printStackTrace();
         } catch (DukeyException e) {
+            output = e.getMessage();
             System.out.println(e.getMessage());
         }
+        return output;
     }
 
     /**
@@ -97,7 +103,7 @@ public class Storage {
     /**
      * Writes taskList into .txt file.
      */
-    public void rewriteFile(String filePath) {
+    public String rewriteFile(String filePath) {
         try {
             // Step 1: Create a FileWriter object in write mode (overwrite mode)
             FileWriter writer = new FileWriter(filePath, false); // false to overwrite
@@ -111,12 +117,12 @@ public class Storage {
 
             // Step 3: Close the writer
             bufferedWriter.close();
-
             System.out.println("File has been rewritten with the ArrayList content.");
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return "File has been rewritten with the ArrayList content.";
     }
 
 }

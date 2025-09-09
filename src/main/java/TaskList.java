@@ -24,49 +24,57 @@ public class TaskList {
      *
      * @param task task to be added to list.
      */
-    public void addTask(Task task) {
+    public String addTask(Task task) {
         System.out.println("________________________________");
         System.out.println("Got it. I've added this task:");
         System.out.println(task);
         arr.add(task);
         System.out.println("Now you have " + size() + " tasks in the list.");
         System.out.println("________________________________");
+        return "Got it. I've added this task:\n" +  task.toString() + "\n"
+                + "Now you have " + size() + " tasks in the list.";
     }
 
-    public void markTask (String text) {
-        arr.get(Integer.parseInt(text.trim()) - 1).mark();
+    public String markTask (String text) {
+        return arr.get(Integer.parseInt(text.trim()) - 1).mark();
     }
 
-    public void unmarkTask (String text) {
-        arr.get(Integer.parseInt(text.trim()) - 1).unmark();
+    public String unmarkTask (String text) {
+        return arr.get(Integer.parseInt(text.trim()) - 1).unmark();
     }
 
     /**
      * Prints out all tasks on current list.
      */
-    public void lst() {
+    public String lst() {
+        String output = "";
         System.out.println("________________________________");
         for (int j = 0; j < arr.size(); j++) {
             System.out.println((j + 1) + "." + arr.get(j).toString());  // Display task with index
+            output += (j + 1) + "." + arr.get(j).toString() + "\n";
         }
         System.out.println("________________________________");
+        return output.stripTrailing();
     }
     /**
      * Filters list by description and prints it
      *
      * @param desc Description of what we are filtering for.
      */
-    public void findTask(String desc) {
+    public String findTask(String desc) {
+        String output = "";
         int index = 1;
         System.out.println("________________________________");
         System.out.println("Here are the matching tasks in your list:");
         for (Task task : arr) {
             if (task.getDesc().contains(desc)) {
                 System.out.println(index + "." + task.toString());
+                output += index + "." + task.toString() + "\n";
                 index ++;
             }
         }
         System.out.println("________________________________");
+        return output.stripTrailing();
     }
 
     /**
@@ -74,7 +82,7 @@ public class TaskList {
      *
      * @param index index of task to be removed.
      */
-    public void deleteTask(int index) {
+    public String deleteTask(int index) {
         Task temp = arr.get(index);
         arr.remove(index);  // Remove the task
         System.out.println("________________________________");
@@ -82,6 +90,8 @@ public class TaskList {
         System.out.println(temp.toString());
         System.out.println("Now you have " + arr.size() + " tasks in the list.");
         System.out.println("________________________________");
+        return "Noted. I've removed this task:\n" + temp.toString()
+                + "\n" + "Now you have " + arr.size() + " tasks in the list.";
     }
 
 }

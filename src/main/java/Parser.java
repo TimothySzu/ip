@@ -36,49 +36,59 @@ public class Parser {
      * @param description further description of command.
      * @throws DukeyException if command is unrecognised.
      */
-    public void parse(String command, String description) throws DukeyException {
+    public String parse(String command, String description) throws DukeyException {
 
         if (command.equals("bye")) {  // Exit condition
             dukey.end();
-            return;
+            return "bye";
         }
-        Task task = null;  // Initialize task object to store created tasks
+        Task task = null;  // Initialize task object to store created tasks\
+        boolean isRewritten = false;
+        String output = "";
         // Handle commands
         switch (command) {
             case "list":
-                taskList.lst();  // Display the task list
+                output = taskList.lst();  // Display the task list
                 break;
             case "mark":
-                taskList.markTask(description);  // Mark task as done
+                output = taskList.markTask(description);
+                isRewritten = true;// Mark task as done
                 break;
             case "unmark":
-                taskList.unmarkTask(description);  // Mark task as undone
+                output = taskList.unmarkTask(description);  // Mark task as undone
+                isRewritten = true;
                 break;
             case "delete":
-                taskList.deleteTask(Integer.parseInt(description.trim()) - 1);  // Delete a task
+                output =  taskList.deleteTask(Integer.parseInt(description.trim()) - 1);  // Delete a task
+                isRewritten = true;
                 break;
             case "todo":
                 task = new ToDo(description.trim(), false);  // Create ToDo task
+                isRewritten = true;
                 break;
             case "deadline":
                 task = new DeadLine(description.trim(), false);  // Create deadline task
+                isRewritten = true;
                 break;
             case "event":
                 task = new Event(description, false);  // Create event task
+                isRewritten = true;
                 break;
             case "find":
-                taskList.findTask(description);
-                break;
+                return taskList.findTask(description);
             default:
                 throw new DukeyException("Command not found");  // Handle invalid commands
         }
 
         // If task is not null, add it to the list
         if (task != null) {
-            taskList.addTask(task);
+            output += taskList.addTask(task);
         }
         //rewrite the txt file
-        storage.rewriteFile("duke.txt");
+        if (isRewritten) {
+            output += "\n" + storage.rewriteFile("duke.txt");
+        }
+        return output;
     }
 }
 
