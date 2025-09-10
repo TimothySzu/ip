@@ -39,12 +39,12 @@ public class Parser {
     public String parse(String command, String description) throws DukeyException {
 
         if (command.equals("bye")) {  // Exit condition
-            dukey.end();
-            return "bye";
+            return dukey.end();
         }
-        Task task = null;  // Initialize task object to store created tasks\
+        Task task = null;  // Initialize task object to store created tasks
         boolean isRewritten = false;
         String output = "";
+
         // Handle commands
         switch (command) {
             case "list":
@@ -79,7 +79,6 @@ public class Parser {
             default:
                 throw new DukeyException("Command not found");  // Handle invalid commands
         }
-
         // If task is not null, add it to the list
         if (task != null) {
             output += taskList.addTask(task);

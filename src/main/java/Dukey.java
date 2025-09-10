@@ -27,20 +27,18 @@ public class Dukey {
         this.parser = new Parser(this, taskList, storage);
         this.ui = new Ui(parser);
 
-        System.out.println("________________________________");
         System.out.println("Hello! I'm Dukey");
         System.out.println("What can I do for you?");
-        System.out.println("________________________________");
+
     }
 
     /**
      * Ends program.
      */
-    public void end() {
-        System.out.println("________________________________");
-        System.out.println("Bye. Hope to see you again soon!");
-        System.out.println("________________________________");
+    public String end() {
+        return "Bye. Hope to see you again soon!";
     }
+
     /**
      * Initialises Dukey chatbot with the required supporting classes.
      * @return String return message
@@ -49,7 +47,6 @@ public class Dukey {
         try {
             return ui.reply(input); // Start taking and replying to user input
         } catch (DukeyException exception) {
-            System.out.println(exception.getMessage());
             return exception.getMessage(); // Handle any exceptions
         }
     }
