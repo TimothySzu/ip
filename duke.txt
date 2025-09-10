@@ -1,2 +1,2 @@
-[T][ ] sleep
-[D][X] return book /by 02/12/2019 1800
+[T][ ] borrow book
+[D][ ] return book /by 02/12/2019 1800

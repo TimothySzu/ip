@@ -14,7 +14,6 @@ public class ToDo extends Task {
      */
     public ToDo (String text, boolean isMarked) throws DukeyException {
         super();
-
         this.type = "T";
         this.isMarked = isMarked;
 

@@ -76,7 +76,9 @@ public class Storage {
      */
     public void add (String line) throws DukeyException {
         //format of line in .txt file is : [E][ ] project meeting /from Mon 2pm /to 4pm)
+        assert(line.length() > 1);
         char type = line.charAt(1);
+        assert(line.length() > 4);
         boolean isMarked =  line.charAt(4) == 'X' ? true : false;
         String rest = line.substring(7);
         Task task = null;
@@ -97,6 +99,7 @@ public class Storage {
         } catch (DukeyException exception) {
             throw exception;
         }
+        assert(task != null);
         taskList.addTask(task);
     }
 
@@ -111,13 +114,11 @@ public class Storage {
 
             // Step 2: Loop through the ArrayList and write each element to the file
             for (Task task : taskList.arr) {
+                assert(task != null);
                 bufferedWriter.write(task.toTxt());
                 bufferedWriter.newLine(); // Add a new line after each item
             }
-
-            // Step 3: Close the writer
             bufferedWriter.close();
-            System.out.println("File has been rewritten with the ArrayList content.");
 
         } catch (IOException e) {
             e.printStackTrace();
