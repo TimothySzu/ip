@@ -77,6 +77,7 @@ public class Parser {
             case "find":
                 return taskList.findTask(description);
             default:
+                assert(task == null);
                 throw new DukeyException("Command not found");  // Handle invalid commands
         }
         // If task is not null, add it to the list
