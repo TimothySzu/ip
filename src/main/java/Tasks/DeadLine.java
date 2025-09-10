@@ -21,19 +21,15 @@ public class DeadLine extends Task {
      */
     public DeadLine (String text, boolean isMarked) throws DukeyException {
         super();
-
-        //set the isMarked status and type
         this.isMarked = isMarked;
         this.type = "D";
 
         //split user input by whitespace and put substrings into an array
         String [] temp = text.split(" ");
-
         //temp variable to store task description
         String deadlineText = "";
         //temp variable to store task deadline
         String deadlineDate = "";
-
         //use StringBuilder to append strings efficiently
         StringBuilder deadlineDesc = new StringBuilder();
 

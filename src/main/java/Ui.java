@@ -39,6 +39,7 @@ class Ui {
                 rest = "";
             }
             //send to parser to decide corresponding behaviour
+            assert(command != "");
             return parser.parse(command, rest);
     }
         //scan.close(); // Close the scanner after use

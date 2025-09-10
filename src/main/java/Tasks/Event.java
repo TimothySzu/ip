@@ -25,14 +25,11 @@ public class Event extends Task {
      */
     public Event (String text, boolean isMarked) throws DukeyException {
         super();
-
-        //set the isMarked status and type
         this.isMarked = isMarked;
         this.type = "E";
 
         //split user input by whitespace and put substrings into an array
         String [] temp = text.split(" ");
-
         //temp variable to store task description
         String eventText = "";
         //use StringBuilder to append strings efficiently
@@ -46,7 +43,7 @@ public class Event extends Task {
                 eventDesc = new StringBuilder(); //Reset eventDesc
 
             } else if (temp[i].equals("/to")) {
-                from = convertToDateTime(eventDesc.toString().trim());  // Save starting date/time
+                this.from = convertToDateTime(eventDesc.toString().trim());  // Save starting date/time
                 eventDesc = new StringBuilder();  //Reset eventDesc
 
             } else {

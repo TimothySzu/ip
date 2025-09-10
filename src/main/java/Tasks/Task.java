@@ -20,21 +20,12 @@ public class Task {
 
     public String mark () {
         isMarked = true;
-        System.out.println("________________________________");
-        System.out.println("Nice! I've marked this task as done:");
-        System.out.println(this.toString());
-        System.out.println("________________________________");
         return "Nice! I've marked this task as done:\n" +
                 this.toString();
-
     }
 
     public String unmark () {
         isMarked = false;
-        System.out.println("________________________________");
-        System.out.println("OK, I've marked this task as not done yet:");
-        System.out.println(this.toString());
-        System.out.println("________________________________");
         return "OK, I've marked this task as not done yet:\n" +
                 this.toString();
     }
