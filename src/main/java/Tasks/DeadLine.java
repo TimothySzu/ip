@@ -2,6 +2,7 @@ package Tasks;
 
 import Exceptions.DukeyException;
 
+import javax.crypto.spec.DESedeKeySpec;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -63,5 +64,13 @@ public class DeadLine extends Task {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
         String temp1 = dueDate.format(formatter);
         return super.toString() + " /by " + temp1;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!super.equals(obj)) return false;
+        if (!(obj instanceof DeadLine)) return false;
+        DeadLine other = (DeadLine) obj;
+        return this.dueDate.equals(other.dueDate);
     }
 }

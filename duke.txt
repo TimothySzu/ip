@@ -1,2 +1,3 @@
-[T][ ] borrow book
 [D][ ] return book /by 02/12/2019 1800
+[T][ ] sleep
+[T][ ] eat

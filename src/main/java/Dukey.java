@@ -24,6 +24,7 @@ public class Dukey {
         //Initialise supporting classes
         this.taskList = new TaskList();
         this.storage = new Storage(taskList);
+        storage.load();
         this.parser = new Parser(this, taskList, storage);
         this.ui = new Ui(parser);
 
