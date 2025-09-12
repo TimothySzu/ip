@@ -74,4 +74,12 @@ public class Event extends Task {
         return super.toString() + " /from " + temp1 + " /to " + temp2;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (!super.equals(obj)) return false;
+        if (getClass() != obj.getClass()) return false;
+        Event other = (Event) obj;
+        return this.from.equals(other.from) && this.to.equals(other.to);
+    }
+
 }

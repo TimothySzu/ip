@@ -13,7 +13,6 @@ public class Task {
     /** Description of task */
     public String text;
 
-
     public String getDesc() {
         return this.text;
     }
@@ -59,5 +58,19 @@ public class Task {
      */
     public String toTxt() {
         return this.toString();
+    }
+
+    /**
+     * Compares 2 tasks.
+     *
+     * @param obj to be compared against.
+     * @return whether the 2 tasks are equal.
+     */
+    public boolean equals(Object obj) {
+        if (this == obj) return true;            // same reference
+        if (!(obj instanceof Task)) return false;
+        // null or different type
+        Task task = (Task) obj;                  // safe cast
+        return this.getDesc().equals(task.getDesc()); // compare contents
     }
 }

@@ -24,6 +24,11 @@ public class TaskList {
      * @param task task to be added to list.
      */
     public String addTask(Task task) {
+        for (int i = 0; i < arr.size(); i++) {
+            if (arr.get(i).equals(task)) {
+                return "Task already exists";
+            }
+        }
         arr.add(task);
         return "Got it. I've added this task:\n" +  task.toString() + "\n"
                 + "Now you have " + size() + " tasks in the list.";
