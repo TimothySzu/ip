@@ -1,19 +1,16 @@
-package Tasks;
-
-import Exceptions.DukeyException;
-import Tasks.Task;
-
-import java.time.LocalDate;
+package tasks;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+
+import exceptions.DukeyException;
 
 /** Represents Event task */
 public class Event extends Task {
 
     /** Start date time of task */
-    LocalDateTime from;
+    private LocalDateTime from;
     /** End date time of task */
-    LocalDateTime to;
+    private LocalDateTime to;
 
     /**
      * Initialises an Event task.
@@ -23,7 +20,7 @@ public class Event extends Task {
      * @param isMarked whether the task is marked as completed.
      * @throws DukeyException if no task description provided.
      */
-    public Event (String text, boolean isMarked) throws DukeyException {
+    public Event(String text, boolean isMarked) throws DukeyException {
         super();
         this.isMarked = isMarked;
         this.type = "E";
@@ -39,20 +36,20 @@ public class Event extends Task {
         for (int i = 0; i < temp.length; i++) {
 
             if (temp[i].equals("/from")) {
-                eventText = eventDesc.toString().trim();  // Save description before /from
+                eventText = eventDesc.toString().trim(); // Save description before /from
                 eventDesc = new StringBuilder(); //Reset eventDesc
 
             } else if (temp[i].equals("/to")) {
-                this.from = convertToDateTime(eventDesc.toString().trim());  // Save starting date/time
-                eventDesc = new StringBuilder();  //Reset eventDesc
+                this.from = convertToDateTime(eventDesc.toString().trim()); // Save starting date/time
+                eventDesc = new StringBuilder(); //Reset eventDesc
 
             } else {
-                eventDesc.append(temp[i]).append(" ");  //Append substring and a whitespace
+                eventDesc.append(temp[i]).append(" "); //Append substring and a whitespace
             }
         }
         //throw DukeyException if task description missing
         if (eventText.isEmpty()) {
-            throw new DukeyException("Description Missing!");  // Handle missing description
+            throw new DukeyException("Description Missing!"); // Handle missing description
         }
         //set the task description and ending date/time
         this.text = eventText.trim();
@@ -60,14 +57,14 @@ public class Event extends Task {
     }
 
     @Override
-    public String toString () {
+    public String toString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HHmm");
         String temp1 = from.format(formatter);
         String temp2 = from.format(formatter);
         return super.toString() + " (from " + temp1 + " to: " + temp2 + ")";
     }
     @Override
-    public String toTxt () {
+    public String toTxt() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
         String temp1 = from.format(formatter);
         String temp2 = from.format(formatter);
@@ -76,8 +73,12 @@ public class Event extends Task {
 
     @Override
     public boolean equals(Object obj) {
-        if (!super.equals(obj)) return false;
-        if (getClass() != obj.getClass()) return false;
+        if (!super.equals(obj)) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
         Event other = (Event) obj;
         return this.from.equals(other.from) && this.to.equals(other.to);
     }

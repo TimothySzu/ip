@@ -1,26 +1,29 @@
-import Exceptions.DukeyException;
-import Tasks.DeadLine;
-import Tasks.Task;
-import Tasks.ToDo;
-import Tasks.Event;
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
+import exceptions.DukeyException;
+import tasks.DeadLine;
+import tasks.Event;
+import tasks.Task;
+import tasks.ToDo;
+
+
 /* Storage class to handle interactions with .txt file */
-public class Storage {
+class Storage {
 
     private TaskList taskList;
+    private String filePath;
 
-/**
- * Initialise storage.
- */
- public Storage(TaskList taskList) {
+    /**
+    * Initialise storage.
+    */
+    public Storage(TaskList taskList, String filePath) {
+
         this.taskList = taskList;
+        this.filePath = filePath;
     }
 
     /**
@@ -33,8 +36,8 @@ public class Storage {
         String output = "";
         //read .txt file
         try {
-            // Create a File object pointing to "duke.txt"
-            File file = new File("duke.txt");
+            // Create a File object pointing to filePath
+            File file = new File(filePath);
 
             // If the file does not exist, create it
             if (!file.exists()) {
@@ -71,30 +74,30 @@ public class Storage {
      * Read the .txt format of task and initialise the task.
      * Add the new task to taskList.
      *
-     * @throws DukeyException if task description missing,
-     * or task type is unspecified,
+     * @param line to be read
+     * @throws DukeyException if task description missing, or task type is unspecified.
      */
-    public void add (String line) throws DukeyException {
+    public void add(String line) throws DukeyException {
         //format of line in .txt file is : [E][ ] project meeting /from Mon 2pm /to 4pm)
         assert(line.length() > 1);
         char type = line.charAt(1);
         assert(line.length() > 4);
-        boolean isMarked =  line.charAt(4) == 'X' ? true : false;
+        boolean isMarked = line.charAt(4) == 'X' ? true : false;
         String rest = line.substring(7);
         Task task = null;
         try {
             switch (type) {
-                case 'T':
-                    task = new ToDo(rest, isMarked);
-                    break;
-                case 'D':
-                    task = new DeadLine(rest, isMarked);
-                    break;
-                case 'E':
-                    task = new Event(rest, isMarked);
-                    break;
-                default:
-                    throw new DukeyException("Unspecified task type");
+            case 'T':
+                task = new ToDo(rest, isMarked);
+                break;
+            case 'D':
+                task = new DeadLine(rest, isMarked);
+                break;
+            case 'E':
+                task = new Event(rest, isMarked);
+                break;
+            default:
+                throw new DukeyException("Unspecified task type");
             }
         } catch (DukeyException exception) {
             throw exception;
@@ -105,8 +108,10 @@ public class Storage {
 
     /**
      * Writes taskList into .txt file.
+     *
+     * @return String message to be returned.
      */
-    public String rewriteFile(String filePath) {
+    public String rewriteFile() {
         try {
             // Step 1: Create a FileWriter object in write mode (overwrite mode)
             FileWriter writer = new FileWriter(filePath, false); // false to overwrite
@@ -125,5 +130,4 @@ public class Storage {
         }
         return "File has been rewritten with the ArrayList content.";
     }
-
 }

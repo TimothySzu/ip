@@ -1,4 +1,4 @@
-package Exceptions;
+package exceptions;
 
 /** DukeyException handles specific checked Exceptions */
 public class DukeyException extends Exception {
@@ -9,7 +9,7 @@ public class DukeyException extends Exception {
      *
      * @param message Associated error message.
      */
-    public DukeyException (String message) {
+    public DukeyException(String message) {
         super(message);
     }
 

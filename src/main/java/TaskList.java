@@ -1,9 +1,9 @@
-import Tasks.Task;
-
 import java.util.ArrayList;
 
+import tasks.Task;
+
 /* TaskList implements a list of current tasks */
-public class TaskList {
+class TaskList {
 
     /* list of tasks */
     protected ArrayList<Task> arr;
@@ -11,7 +11,7 @@ public class TaskList {
     /**
      * Initialise TaskList.
      */
-    public TaskList () {
+    public TaskList() {
         this.arr = new ArrayList<Task>();
     }
     public int size() {
@@ -30,15 +30,15 @@ public class TaskList {
             }
         }
         arr.add(task);
-        return "Got it. I've added this task:\n" +  task.toString() + "\n"
+        return "Got it. I've added this task:\n" + task.toString() + "\n"
                 + "Now you have " + size() + " tasks in the list.";
     }
 
-    public String markTask (String text) {
+    public String markTask(String text) {
         return arr.get(Integer.parseInt(text.trim()) - 1).mark();
     }
 
-    public String unmarkTask (String text) {
+    public String unmarkTask(String text) {
         return arr.get(Integer.parseInt(text.trim()) - 1).unmark();
     }
 
@@ -49,7 +49,7 @@ public class TaskList {
     public String lst() {
         String output = "";
         for (int j = 0; j < arr.size(); j++) {
-            System.out.println((j + 1) + "." + arr.get(j).toString());  // Display task with index
+            System.out.println((j + 1) + "." + arr.get(j).toString()); // Display task with index
             output += (j + 1) + "." + arr.get(j).toString() + "\n";
         }
         return output.stripTrailing();
@@ -69,7 +69,7 @@ public class TaskList {
             if (task.getDesc().contains(desc)) {
                 System.out.println(index + "." + task.toString());
                 output += index + "." + task.toString() + "\n";
-                index ++;
+                index++;
             }
         }
         return output.stripTrailing();
@@ -83,7 +83,7 @@ public class TaskList {
      */
     public String deleteTask(int index) {
         Task temp = arr.get(index);
-        arr.remove(index);  // Remove the task
+        arr.remove(index); // Remove the task
         System.out.println(temp.toString());
         return "Noted. I've removed this task:\n" + temp.toString()
                 + "\n" + "Now you have " + arr.size() + " tasks in the list.";

@@ -1,7 +1,5 @@
-import Exceptions.DukeyException;
+import exceptions.DukeyException;
 
-import java.util.ArrayList;
-import java.util.Scanner;
 
 /** Dukey class represents chatbot */
 public class Dukey {
@@ -16,21 +14,18 @@ public class Dukey {
     private Ui ui;
     /* reply message to output */
     private String output;
+
     /**
      * Initialises Dukey chatbot with the required supporting classes.
      */
-    public Dukey() {
+    public Dukey(String filePath) {
 
         //Initialise supporting classes
         this.taskList = new TaskList();
-        this.storage = new Storage(taskList);
+        this.storage = new Storage(taskList, filePath);
         storage.load();
         this.parser = new Parser(this, taskList, storage);
         this.ui = new Ui(parser);
-
-        System.out.println("Hello! I'm Dukey");
-        System.out.println("What can I do for you?");
-
     }
 
     /**
@@ -41,7 +36,7 @@ public class Dukey {
     }
 
     /**
-     * Initialises Dukey chatbot with the required supporting classes.
+     * Gets reply message from ui.
      * @return String return message
      */
     String reply(String input) {

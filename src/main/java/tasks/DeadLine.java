@@ -1,16 +1,15 @@
-package Tasks;
-
-import Exceptions.DukeyException;
-
-import javax.crypto.spec.DESedeKeySpec;
+package tasks;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+
+import exceptions.DukeyException;
+
 
 /** Represents DeadLine task */
 public class DeadLine extends Task {
 
     /** Deadline of task */
-    public LocalDateTime dueDate;
+    private LocalDateTime dueDate;
 
     /**
      * Initialises a DeadLine task.
@@ -20,7 +19,7 @@ public class DeadLine extends Task {
      * @param isMarked whether the task is marked as completed.
      * @throws DukeyException if no task description provided.
      */
-    public DeadLine (String text, boolean isMarked) throws DukeyException {
+    public DeadLine(String text, boolean isMarked) throws DukeyException {
         super();
         this.isMarked = isMarked;
         this.type = "D";
@@ -33,11 +32,14 @@ public class DeadLine extends Task {
         String deadlineDate = "";
         //use StringBuilder to append strings efficiently
         StringBuilder deadlineDesc = new StringBuilder();
+        //keep track of whether there is a date or not
+        boolean hasDate = false;
 
         //loop through substring array
         for (int i = 0; i < temp.length; i++) {
             if (temp[i].equals("/by")) {
-                deadlineText = deadlineDesc.toString();  // Save task description before /by
+                hasDate = true;
+                deadlineText = deadlineDesc.toString(); // Save task description before /by
                 deadlineDesc = new StringBuilder(); //reset deadlineDesc
             } else {
                 deadlineDesc.append(temp[i]).append(" "); //Append substring and a whitespace
@@ -45,12 +47,19 @@ public class DeadLine extends Task {
         }
         //throw DukeyException if task description missing
         if (deadlineText.isEmpty()) {
-            throw new DukeyException("Description Missing!");  // Handle missing description
+            throw new DukeyException("Description Missing!"); // Handle missing description
+        }
+        if (!hasDate) {
+            throw new DukeyException("Date Missing!");
         }
 
         //set the task description and deadline
         this.text = deadlineText.trim();
-        this.dueDate = convertToDateTime (deadlineDesc.toString().trim());
+        this.dueDate = convertToDateTime(deadlineDesc.toString().trim());
+    }
+
+    public LocalDateTime getDueDate() {
+        return dueDate;
     }
 
     @Override
@@ -60,7 +69,7 @@ public class DeadLine extends Task {
         return super.toString() + " (by: " + temp1 + ")";
     }
     @Override
-    public String toTxt () {
+    public String toTxt() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
         String temp1 = dueDate.format(formatter);
         return super.toString() + " /by " + temp1;
@@ -68,8 +77,12 @@ public class DeadLine extends Task {
 
     @Override
     public boolean equals(Object obj) {
-        if (!super.equals(obj)) return false;
-        if (!(obj instanceof DeadLine)) return false;
+        if (!super.equals(obj)) {
+            return false;
+        }
+        if (!(obj instanceof DeadLine)) {
+            return false;
+        }
         DeadLine other = (DeadLine) obj;
         return this.dueDate.equals(other.dueDate);
     }

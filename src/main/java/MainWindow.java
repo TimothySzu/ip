@@ -5,6 +5,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+
 /**
  * Controller for the main GUI.
  */
@@ -19,6 +20,8 @@ public class MainWindow extends AnchorPane {
     private Button sendButton;
 
     private Dukey dukey;
+
+    private boolean isFirst = true;
 
     private Image userImage = new Image(this.getClass().getResourceAsStream("/images/Donald-J-Trump.png"));
     private Image dukeyImage = new Image(this.getClass().getResourceAsStream("/images/Musk.png"));

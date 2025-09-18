@@ -1,4 +1,4 @@
-package Tasks;
+package tasks;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -7,26 +7,24 @@ import java.time.format.DateTimeFormatter;
 public class Task {
 
     /** Whether a tasked is marked as completed or not, not completed by default*/
-    protected boolean isMarked  = false;
+    protected boolean isMarked = false;
     /** Type of Task, "T", "D", "E"/ ToDo, DeadLine, Event */
-    public String type;
+    protected String type;
     /** Description of task */
-    public String text;
+    protected String text;
 
     public String getDesc() {
         return this.text;
     }
 
-    public String mark () {
+    public String mark() {
         isMarked = true;
-        return "Nice! I've marked this task as done:\n" +
-                this.toString();
+        return "Nice! I've marked this task as done:\n" + this.toString();
     }
 
-    public String unmark () {
+    public String unmark() {
         isMarked = false;
-        return "OK, I've marked this task as not done yet:\n" +
-                this.toString();
+        return "OK, I've marked this task as not done yet:\n" + this.toString();
     }
 
     /**
@@ -35,7 +33,7 @@ public class Task {
      * @param date the date-time string to parse, in the format "dd/MM/yyyy HHmm".
      * @return a {@code LocalDateTime} representing the parsed date and time.
      */
-    LocalDateTime convertToDateTime (String date) {
+    LocalDateTime convertToDateTime(String date) {
         //date format : dd/mm//yyyy 0000
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
         LocalDateTime dt = LocalDateTime.parse(date, formatter);
@@ -60,17 +58,17 @@ public class Task {
         return this.toString();
     }
 
-    /**
-     * Compares 2 tasks.
-     *
-     * @param obj to be compared against.
-     * @return whether the 2 tasks are equal.
-     */
+    @Override
     public boolean equals(Object obj) {
-        if (this == obj) return true;            // same reference
-        if (!(obj instanceof Task)) return false;
+        // same reference
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof Task)) {
+            return false;
+        }
         // null or different type
-        Task task = (Task) obj;                  // safe cast
+        Task task = (Task) obj; // safe cast
         return this.getDesc().equals(task.getDesc()); // compare contents
     }
 }
