@@ -1,12 +1,13 @@
+package tasklist;
 import java.util.ArrayList;
 
 import tasks.Task;
 
 /* TaskList implements a list of current tasks */
-class TaskList {
+public class TaskList {
 
     /* list of tasks */
-    protected ArrayList<Task> arr;
+    public ArrayList<Task> arr;
 
     /**
      * Initialise TaskList.
@@ -72,7 +73,10 @@ class TaskList {
                 index++;
             }
         }
-        return output.stripTrailing();
+        if (index== 1) {
+            return "No matching tasks found";
+        }
+        return "Here are the matching tasks in your list:\n" + output.stripTrailing();
     }
 
     /**

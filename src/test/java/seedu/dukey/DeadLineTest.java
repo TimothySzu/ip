@@ -15,7 +15,7 @@ import tasks.DeadLine;
 
 
 
-public class DeadlineTest {
+public class DeadLineTest {
 
     @Test
     public void initialisationTest() throws DukeyException {

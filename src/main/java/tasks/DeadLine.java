@@ -45,13 +45,14 @@ public class DeadLine extends Task {
                 deadlineDesc.append(temp[i]).append(" "); //Append substring and a whitespace
             }
         }
+        if (!hasDate) {
+            throw new DukeyException("Date Missing!");
+        }
         //throw DukeyException if task description missing
         if (deadlineText.isEmpty()) {
             throw new DukeyException("Description Missing!"); // Handle missing description
         }
-        if (!hasDate) {
-            throw new DukeyException("Date Missing!");
-        }
+
 
         //set the task description and deadline
         this.text = deadlineText.trim();

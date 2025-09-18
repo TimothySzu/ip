@@ -60,14 +60,14 @@ public class Event extends Task {
     public String toString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HHmm");
         String temp1 = from.format(formatter);
-        String temp2 = from.format(formatter);
+        String temp2 = to.format(formatter);
         return super.toString() + " (from " + temp1 + " to: " + temp2 + ")";
     }
     @Override
     public String toTxt() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
         String temp1 = from.format(formatter);
-        String temp2 = from.format(formatter);
+        String temp2 = to.format(formatter);
         return super.toString() + " /from " + temp1 + " /to " + temp2;
     }
 
