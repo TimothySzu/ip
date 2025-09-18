@@ -1,12 +1,11 @@
 # Dukey Introduction
-'
+```
  ____        _        
 |  _ \ _   _| | _______  __
 | | | | | | | |/ / _ \ \/ /
 | |_| | |_| |   <  __/\  /
 |____/ \__,_|_|\_\___|/_/
-
-'
+```
 
 My CLI chatbot is named Dukey. Dukey is a quick and efficient way to help you to keep track of tasks
 and deadlines. Dukey will store your tasks in a .txt file and update it automatically. A new file, 
